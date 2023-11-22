@@ -11,8 +11,11 @@ namespace CongestionTaxCalculator.Domain.Context
         }
 
         public virtual DbSet<Car> Cars { get; set; }
-        public virtual DbSet<TaxHour> TaxHours { get; set; }
-        public virtual DbSet<TaxLog> TaxLogs { get; set; }
+        public virtual DbSet<CarCruceLog> CarCruceLogs { get; set; }
+        public virtual DbSet<CarTollType> CarTollTypes { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<CityTaxHour> CityTaxHours { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

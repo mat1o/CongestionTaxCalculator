@@ -10,6 +10,9 @@ namespace CongestionTaxCalculator.Domain.Configuration
         {
             builder.HasKey(x => x.Id);
 
+            builder.HasIndex(x => x.LicensePlate)
+                .IsUnique();
+
             builder.HasMany(x => x.TaxLogs)
                 .WithOne(x => x.Car)
                 .HasForeignKey(x => x.CarId)

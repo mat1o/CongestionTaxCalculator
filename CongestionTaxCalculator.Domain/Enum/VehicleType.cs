@@ -1,6 +1,6 @@
 ﻿namespace CongestionTaxCalculator.Domain.Enum
 {
-    public enum CarType
+    public enum VehicleType
     {
         EmergencyVehicle,
         Bus,

@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CongestionTaxCalculator.Domain.Configuration
 {
-    public class TaxLogConfiguration : IEntityTypeConfiguration<TaxLog>
+    public class CarTollTypeConfiguration : IEntityTypeConfiguration<CarTollType>
     {
-        public void Configure(EntityTypeBuilder<TaxLog> builder)
+        public void Configure(EntityTypeBuilder<CarTollType> builder)
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.Car)
-                .WithMany(x => x.TaxLogs)
-                .HasForeignKey(x => x.Id)
+            builder.HasMany(x=>x.Cars)
+                .WithOne(x=>x.CarTollType)
+                .HasForeignKey(x=>x.Id)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
