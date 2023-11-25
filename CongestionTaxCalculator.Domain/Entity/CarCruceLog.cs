@@ -6,7 +6,7 @@
 
         public DateTime EventDatetime { get; set; }
 
-        public string? MyProperty { get; set; }
+        public string? Description { get; set; }
 
         public Car Car { get; set; }
     }

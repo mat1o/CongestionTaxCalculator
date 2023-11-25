@@ -3,22 +3,23 @@ using CongestionTaxCalculator.Domain.Entity;
 using CongestionTaxCalculator.Service.Services.Abstraction;
 using Microsoft.EntityFrameworkCore;
 using CongestionTaxCalculator.Service.Utilities;
+using CongestionTaxCalculator.Service.ViewModels;
 
 namespace CongestionTaxCalculator.Service.Services.Implementation
 {
-    public class TaxCalculatorService : ITaxCalculatorService
+    public class TaxService : ITaxService
     {
         private readonly ApplicationDbContext _applicationDbContext;
-        private readonly ITollCalculator _tollCalculator;
+        private readonly ITollService _tollCalculator;
 
-        public TaxCalculatorService(ApplicationDbContext applicationDbContext,
-            ITollCalculator tollCalculator)
+        public TaxService(ApplicationDbContext applicationDbContext,
+            ITollService tollCalculator)
         {
             _applicationDbContext = applicationDbContext;
             _tollCalculator = tollCalculator;
         }
 
-        public async ValueTask<float> GetTax(Car vehicle , City city)
+        public async ValueTask<float> GetTax(CarViewModel vehicle , CityViewModel city)
         {
             var carCruceLogs = await _applicationDbContext.CarCruceLogs
                 .Where(q => q.CarId == vehicle.Id)
@@ -51,7 +52,7 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
 
         }
 
-        public async ValueTask<float> GetTollFee(Car vehicle, DateTime date, City city)
+        public async ValueTask<float> GetTollFee(CarViewModel vehicle, DateTime date, CityViewModel city)
             => date.IsTollFreeDate() || vehicle.IsTollFreeVehicle() ? 0.0f : await _tollCalculator.CalculatTollForCity(city,date);
     }
 }

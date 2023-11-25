@@ -1,11 +1,12 @@
 ﻿using CongestionTaxCalculator.Domain.Entity;
 using CongestionTaxCalculator.Domain.Enum;
+using CongestionTaxCalculator.Service.ViewModels;
 
 namespace CongestionTaxCalculator.Service.Utilities
 {
     public static class ExtentionMethods
     {
-        public static bool IsTollFreeVehicle(this Car vehicle)
+        public static bool IsTollFreeVehicle(this CarViewModel vehicle)
         {
             if (vehicle == null) return false;
 

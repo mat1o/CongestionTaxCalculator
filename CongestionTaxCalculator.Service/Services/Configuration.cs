@@ -8,7 +8,7 @@ namespace CongestionTaxCalculator.Service.Services
     {
         public static IServiceCollection AddBusinessService(this IServiceCollection services)
         {
-            services.AddScoped<ITaxCalculatorService, TaxCalculatorService>();
+            services.AddScoped<ITaxService, TaxService>();
 
             return services;
         }

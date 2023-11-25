@@ -1,7 +1,12 @@
-﻿namespace CongestionTaxCalculator.Domain.Entity
+﻿using CongestionTaxCalculator.Domain.Entity;
+using CongestionTaxCalculator.Domain.Enum;
+
+namespace CongestionTaxCalculator.Service.ViewModels
 {
-    public class Car : BaseEntity
+    public class CarViewModel
     {
+        public int Id { get; set; }
+
         public int CarTypeId { get; set; }
 
         public CarTollType CarTollType { get; set; }

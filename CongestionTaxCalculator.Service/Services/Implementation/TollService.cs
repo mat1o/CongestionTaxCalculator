@@ -1,22 +1,21 @@
 ﻿using CongestionTaxCalculator.Domain.Context;
 using CongestionTaxCalculator.Domain.Entity;
 using CongestionTaxCalculator.Service.Services.Abstraction;
+using CongestionTaxCalculator.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Metadata;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CongestionTaxCalculator.Service.Services.Implementation
 {
-    public class TollCalculator : ITollCalculator
+    public class TollService : ITollService
     {
         private readonly ApplicationDbContext _applicationDbContext;
 
-        public TollCalculator(ApplicationDbContext applicationDbContext)
+        public TollService(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
         }
 
-        public async ValueTask<float> CalculatTollForCity(City city , DateTime date)
+        public async ValueTask<float> CalculatTollForCity(CityViewModel city , DateTime date)
         {
             var cityTaxHours = await _applicationDbContext.CityTaxHours
                 .Include(x=>x.City)
@@ -30,7 +29,7 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
         {
             foreach (var cityTaxHoure in cityTaxHours)
             {
-                if (cityTaxHoure.From < date && date < cityTaxHoure.To)
+                if (DateTime.Compare(cityTaxHoure.From, date) == -1 && DateTime.Compare(date, cityTaxHoure.To) == -1)
                     return cityTaxHoure.Amount;
 
                 else return 0.0f;
