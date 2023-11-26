@@ -1,3 +1,4 @@
+using CongestionTaxCalculator.Domain.Concretes;
 using CongestionTaxCalculator.Domain.Context;
 using CongestionTaxCalculator.Service.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddBusinessService();
+builder.Services.AddDataServices();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(
           builder.Configuration.GetConnectionString("DefaultConnection")));

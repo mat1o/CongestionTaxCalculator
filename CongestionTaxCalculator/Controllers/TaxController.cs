@@ -22,8 +22,12 @@ namespace CongestionTaxCalculator.Controllers
             _mediatior = mediatior;
         }
 
+        [HttpGet]
         public async ValueTask<float> GetTax(CarViewModel vehicle, CityViewModel city) => await _taxService.GetTax(vehicle, city);
 
+
+        //a sample of insert a record in citytaxhour table via mediatR service(CQRS).
+        [HttpPut]
         public async Task<CityTaxHour> InsertNewCityTaxHour(CityTaxHourViewModel cityTaxHourViewModel)
             => await _mediatior.Send(new CreateCommand<CityTaxHour>() { Object = cityTaxHourViewModel.MapToMainModel<CityTaxHour,CityTaxHourViewModel>() });
         

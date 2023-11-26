@@ -6,11 +6,9 @@ namespace CongestionTaxCalculator.Domain.Entity
     {
         public int CityId { get; set; }
 
-        [DatetimeRangeAnnotation]
-        public DateTime From { get; set; }
+        public TimeOnly From { get; set; }
 
-        [DatetimeRangeAnnotation]
-        public DateTime To { get; set; }
+        public TimeOnly To { get; set; }
 
         public float Amount { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using CongestionTaxCalculator.Domain.Context;
 using CongestionTaxCalculator.Domain.Entity;
+using CongestionTaxCalculator.Domain.Mock;
 using CongestionTaxCalculator.Service.Services.Abstraction;
 using CongestionTaxCalculator.Service.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -22,14 +23,16 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
                 .Where(x=>x.CityId == city.Id)
                 .ToListAsync();
 
-            return FindAmountToll(date, cityTaxHours);
+            return FindTollAmount(new TimeOnly(date.Hour,date.Minute,date.Second), cityTaxHours);
         }
 
-        private float FindAmountToll(DateTime date, IEnumerable<CityTaxHour> cityTaxHours)
+        public float CalculatTollForTest(CityViewModel city, TimeOnly time) => FindTollAmount(time, MockCityTaxHour.MockData());
+        
+        private float FindTollAmount(TimeOnly time, IEnumerable<CityTaxHour> cityTaxHours)
         {
             foreach (var cityTaxHoure in cityTaxHours)
             {
-                if (DateTime.Compare(cityTaxHoure.From, date) == -1 && DateTime.Compare(date, cityTaxHoure.To) == -1)
+                if (time.CompareTo(cityTaxHoure.From) > 0 && time.CompareTo(cityTaxHoure.To) < 0)
                     return cityTaxHoure.Amount;
 
                 else return 0.0f;

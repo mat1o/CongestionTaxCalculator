@@ -1,6 +1,5 @@
 ﻿using CongestionTaxCalculator.Domain.Annotations;
 using CongestionTaxCalculator.Domain.Entity;
-using CongestionTaxCalculator.Service.Utilities;
 
 namespace CongestionTaxCalculator.Service.ViewModels
 {
