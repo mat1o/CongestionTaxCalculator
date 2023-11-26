@@ -1,4 +1,5 @@
 ﻿using CongestionTaxCalculator.Domain.Configuration;
+using CongestionTaxCalculator.Domain.Converters;
 using CongestionTaxCalculator.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,15 @@ namespace CongestionTaxCalculator.Domain.Context
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<CityTaxHour> CityTaxHours { get; set; }
 
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateOnly>()
+            .HaveConversion<DateOnlyConverter>();
+
+            configurationBuilder.Properties<TimeOnly>()
+                .HaveConversion<TimeOnlyConverter>();
+            base.ConfigureConventions(configurationBuilder);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
