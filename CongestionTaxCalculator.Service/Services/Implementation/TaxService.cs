@@ -19,10 +19,10 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
             _tollCalculator = tollCalculator;
         }
 
-        public async ValueTask<float> GetTax(CarViewModel vehicle , CityViewModel city)
+        public async ValueTask<float> GetTax(GetTaxViewModel getTaxViewModel)
         {
             var carCruceLogs = await _applicationDbContext.CarCruceLogs
-                .Where(q => q.CarId == vehicle.Id)
+                .Where(q => q.CarId == getTaxViewModel.CarViewModel.Id)
                 .OrderBy(q=>q.EventDatetime)
                 .ToListAsync();
 
@@ -31,8 +31,8 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
 
             carCruceLogs.ForEach(async c =>
             {
-                var nextFee = await GetTollFee(vehicle, c.EventDatetime,city);
-                var tempFee = await GetTollFee(vehicle, intervalStart, city);
+                var nextFee = await GetTollFee(getTaxViewModel.CarViewModel, c.EventDatetime, getTaxViewModel.CityViewModel);
+                var tempFee = await GetTollFee(getTaxViewModel.CarViewModel, intervalStart, getTaxViewModel.CityViewModel);
 
                 long diffInMillies = c.EventDatetime.Millisecond - intervalStart.Millisecond;
                 long minutes = diffInMillies / 1000 / 60;
