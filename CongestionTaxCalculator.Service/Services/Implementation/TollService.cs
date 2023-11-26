@@ -23,15 +23,16 @@ namespace CongestionTaxCalculator.Service.Services.Implementation
                 .Where(x=>x.CityId == city.Id)
                 .ToListAsync();
 
-            return FindTollAmount(new TimeOnly(date.Hour,date.Minute,date.Second), cityTaxHours);
+            return FindTollAmount(city,new TimeOnly(date.Hour,date.Minute,date.Second), cityTaxHours);
         }
 
-        public float CalculatTollForTest(CityViewModel city, TimeOnly time) => FindTollAmount(time, MockCityTaxHour.MockData());
+        public float CalculatTollForTest(CityViewModel city, TimeOnly time) => FindTollAmount(city, time, MockCityTaxHour.MockData());
         
-        private float FindTollAmount(TimeOnly time, IEnumerable<CityTaxHour> cityTaxHours)
+        private float FindTollAmount(CityViewModel city, TimeOnly time, IEnumerable<CityTaxHour> cityTaxHours)
         {
             foreach (var cityTaxHoure in cityTaxHours)
             {
+                if(cityTaxHoure.City.Name == city.Name)
                 if (time.CompareTo(cityTaxHoure.From) > 0 && time.CompareTo(cityTaxHoure.To) < 0)
                     return cityTaxHoure.Amount;
 
